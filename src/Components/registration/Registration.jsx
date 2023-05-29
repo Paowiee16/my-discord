@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import "../login/login.css";
 
-import { auth } from "../../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, googleProvider } from "../../config/firebase";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const SignUp = async () => {
-    console.log("Registering");
-    await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const SignInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -57,7 +68,11 @@ function Registration() {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+            onClick={SignInWithGoogle}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
