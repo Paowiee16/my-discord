@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "../login/login.css";
-import { useNavigate } from "react-router-dom";
+
+import { auth } from "../../config/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 function Registration() {
-  const navigateTo = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const SignUp = async () => {
+    console.log("Registering");
+    await createUserWithEmailAndPassword(auth, email, password);
+  };
+
   return (
     <div className=" Login w-screen h-screen flex content-center items-center">
       <div className="w-full m-auto max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100 ">
@@ -11,19 +20,11 @@ function Registration() {
           <div className="space-y-1 text-sm">
             <input
               type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
-              className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-            />
-          </div>
-          <div className="space-y-1 text-sm">
-            <input
-              type="text"
               name="email"
               id="email"
               placeholder="Email"
               className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="space-y-1 text-sm">
@@ -33,6 +34,7 @@ function Registration() {
               id="password"
               placeholder="Password"
               className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex justify-end text-xs dark:text-gray-400">
               <a rel="noopener noreferrer" href="#">
@@ -40,7 +42,10 @@ function Registration() {
               </a>
             </div>
           </div>
-          <button className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400">
+          <button
+            className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400"
+            onClick={SignUp}
+          >
             Sign in
           </button>
         </form>

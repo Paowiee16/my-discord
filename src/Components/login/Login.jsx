@@ -1,8 +1,12 @@
 import React from "react";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../config/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 function Login() {
-  const navigateTo = useNavigate();
+  const LogIn = () => {};
+
   return (
     <div className=" Login w-screen h-screen flex content-center items-center">
       <div className="w-full m-auto max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100">
@@ -46,7 +50,11 @@ function Login() {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+            onClick={SignIn()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
@@ -89,6 +97,13 @@ function Login() {
       </div>
     </div>
   );
+}
+
+function SignIn() {
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthPtovider();
+    auth.SignInWithPopup(provider);
+  };
 }
 
 export default Login;
