@@ -1,17 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../config/firebase";
+import { signOut } from "firebase/auth";
 function Navbar() {
-  const navigateTo = useNavigate();
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div>
       <div className="flex h-screen  flex-col justify-between  dark:bg-[#090D16]  sticky top-0 shadow-lg">
         <div>
           <div className="inline-flex h-16 w-16 items-center justify-center">
             <span className="grid h-10 w-10 place-content-center rounded-full  text-xs text-gray-600">
-              <img
-                src="https://i.pinimg.com/564x/7f/b2/fb/7fb2fb7af15e2f386ca47f7c7e21105d.jpg"
-                className="rounded-full"
-              />
+              <img src={auth.currentUser.photoURL} className="rounded-full" />
             </span>
           </div>
 
@@ -80,7 +85,7 @@ function Navbar() {
             <button
               type="submit"
               className="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500  hover:text-gray-700 hover:stroke-black "
-              onClick={() => navigateTo("/Login")}
+              onClick={logout}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

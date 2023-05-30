@@ -1,15 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../login/login.css";
-
 import { auth, googleProvider } from "../../config/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 
 function Registration() {
+  const navigateTo = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const SignUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password).then(
+        (userCredential) => {
+          updateProfile(userCredential.user, { displayName: displayName });
+        }
+      );
     } catch (err) {
       console.error(err);
     }
@@ -28,6 +39,16 @@ function Registration() {
       <div className="w-full m-auto max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100 ">
         <h1 className="text-2xl font-bold text-center">Sign Up</h1>
         <form action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
+          <div className="space-y-1 text-sm">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+              className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
+          </div>
           <div className="space-y-1 text-sm">
             <input
               type="text"

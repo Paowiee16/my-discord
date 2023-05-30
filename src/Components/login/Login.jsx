@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, googleProvider } from "../../config/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 function Login() {
-  const LogIn = () => {};
+  const navigateTo = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signInEmailandPassword = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password).then(
+        (userCredential) => {
+          console.log(userCredential);
+          navigateTo("/Dashboard");
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const SignInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider).then(() => {
+        navigateTo("/Dashboard");
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className=" Login w-screen h-screen flex content-center items-center">
@@ -15,10 +40,11 @@ function Login() {
           <div className="space-y-1 text-sm">
             <input
               type="text"
-              name="username"
-              id="username"
+              name="email"
+              id="Email"
               placeholder="Username"
               className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="space-y-1 text-sm">
@@ -28,6 +54,7 @@ function Login() {
               id="password"
               placeholder="Password"
               className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex justify-end text-xs dark:text-gray-400">
               <a rel="noopener noreferrer" href="#">
@@ -37,7 +64,7 @@ function Login() {
           </div>
           <button
             className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400 "
-            onClick={() => navigateTo("/Dashboard")}
+            onClick={signInEmailandPassword}
           >
             Sign in
           </button>
@@ -53,7 +80,7 @@ function Login() {
           <button
             aria-label="Log in with Google"
             className="p-3 rounded-sm"
-            onClick={SignIn()}
+            onClick={SignInWithGoogle}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -97,13 +124,6 @@ function Login() {
       </div>
     </div>
   );
-}
-
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthPtovider();
-    auth.SignInWithPopup(provider);
-  };
 }
 
 export default Login;
