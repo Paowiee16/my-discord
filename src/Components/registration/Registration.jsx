@@ -14,15 +14,21 @@ function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  console.log(auth.currentUser);
+
   const SignUp = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          updateProfile(userCredential.user, { displayName: displayName });
-        }
-      );
-    } catch (err) {
-      console.error(err);
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log(auth.currentUser);
+      updateProfile(auth.currentUser, {
+        displayName: displayName,
+        photoURL:
+          "https://i.pinimg.com/564x/83/7b/d7/837bd7dd2a50938240af3da221983b9c.jpg",
+      }).then(() => {
+        navigateTo("/Dashboard");
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -38,49 +44,49 @@ function Registration() {
     <div className=" Login w-screen h-screen flex content-center items-center">
       <div className="w-full m-auto max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100 ">
         <h1 className="text-2xl font-bold text-center">Sign Up</h1>
-        <form action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
-          <div className="space-y-1 text-sm">
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Name"
-              className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
+
+        <div className="space-y-1 text-sm">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name"
+            className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+        </div>
+        <div className="space-y-1 text-sm">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Email"
+            className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="space-y-1 text-sm">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className="flex justify-end text-xs dark:text-gray-400">
+            <a rel="noopener noreferrer" href="#">
+              Forgot Password?
+            </a>
           </div>
-          <div className="space-y-1 text-sm">
-            <input
-              type="text"
-              name="email"
-              id="email"
-              placeholder="Email"
-              className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="space-y-1 text-sm">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              className="w-full px-4 py-3 rounded-md border-2  dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <div className="flex justify-end text-xs dark:text-gray-400">
-              <a rel="noopener noreferrer" href="#">
-                Forgot Password?
-              </a>
-            </div>
-          </div>
-          <button
-            className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400"
-            onClick={SignUp}
-          >
-            Sign in
-          </button>
-        </form>
+        </div>
+        <button
+          className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400"
+          onClick={SignUp}
+        >
+          Sign in
+        </button>
+
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
           <p className="px-3 text-sm dark:text-gray-400">

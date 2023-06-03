@@ -11,12 +11,9 @@ function Login() {
 
   const signInEmailandPassword = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          console.log(userCredential);
-          navigateTo("/Dashboard");
-        }
-      );
+      await signInWithEmailAndPassword(auth, email, password).then(() => {
+        navigateTo("/Dashboard");
+      });
     } catch (error) {
       console.log(error);
     }
@@ -36,39 +33,39 @@ function Login() {
     <div className=" Login w-screen h-screen flex content-center items-center">
       <div className="w-full m-auto max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100">
         <h1 className="text-2xl font-bold text-center">Login</h1>
-        <form action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
-          <div className="space-y-1 text-sm">
-            <input
-              type="text"
-              name="email"
-              id="Email"
-              placeholder="Username"
-              className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+
+        <div className="space-y-1 text-sm">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Username"
+            className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="space-y-1 text-sm">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className="flex justify-end text-xs dark:text-gray-400">
+            <a rel="noopener noreferrer" href="#">
+              Forgot Password?
+            </a>
           </div>
-          <div className="space-y-1 text-sm">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              className="w-full px-4 py-3 rounded-md border-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <div className="flex justify-end text-xs dark:text-gray-400">
-              <a rel="noopener noreferrer" href="#">
-                Forgot Password?
-              </a>
-            </div>
-          </div>
-          <button
-            className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400 "
-            onClick={signInEmailandPassword}
-          >
-            Sign in
-          </button>
-        </form>
+        </div>
+        <button
+          className="block w-full p-3 text-center rounded-sm dark:text-gray-900 dark:bg-violet-400 "
+          onClick={signInEmailandPassword}
+        >
+          Sign in
+        </button>
+
         <div className="flex items-center pt-4 space-x-1">
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
           <p className="px-3 text-sm dark:text-gray-400">
