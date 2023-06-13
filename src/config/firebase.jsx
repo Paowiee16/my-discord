@@ -2,6 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
+import "firebase/compat/firestore";
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBf25odcK2-Zi_rgh0hWe2Q_NUzQAiQ5uw",
   authDomain: "mydiscord-e1532.firebaseapp.com",
@@ -15,3 +18,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);

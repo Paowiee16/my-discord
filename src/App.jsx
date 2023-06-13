@@ -7,10 +7,10 @@ import { Route, Routes } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 function App() {
   const auth = getAuth();
-
-  console.log(auth.currentUser);
+  const [user] = useAuthState(auth);
   return (
     <>
       <Routes>
@@ -20,9 +20,7 @@ function App() {
         <Route path="Registration" element={<Registration />} />
         <Route path="Dashboard" element={<Dashboard />} />
       </Routes>
-      {auth.currentUser} ?
-      <Navigate to="/Dashboard" /> :
-      <Navigate to="/Login" />
+      {user ? <Navigate to="/Dashboard" /> : <Navigate to="/Login" />}
     </>
   );
 }
