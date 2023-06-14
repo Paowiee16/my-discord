@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "../../config/firebase";
 import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 import SendMessage from "./SendMessage";
+import moment from "moment";
 
 function Chat() {
   const [messages, setMessages] = useState([]);
@@ -17,22 +18,30 @@ function Chat() {
     });
     return () => unsubscribe();
   }, []);
-
+  console.log(messages);
   return (
-    <>
-      <div className=" flex flex-col items-end justify-end gap-4  w-screen ">
-        Chat:
+    <div>
+      <div className="  items-end  gap-4  w-screen  h-5/6   overflow-scroll text-left">
         {messages.map((message) => (
-          <div
-            key={message.id}
-            className="  py-3 px-4 bg-slate-600 rounded-lg  "
-          >
-            <p>{message.message}</p>
+          <div key={message.id} className="p-5">
+            <span className=" flex gap-4 rounded-full  text-gray-600">
+              <img
+                src={message.photoURL}
+                className="rounded-full h-12 w-12  shadow-lg"
+              />
+              <span>
+                <p className=" text-yellow-500">{message.displayName}</p>
+                <p className="text-sm text-gray-500 content-center">
+                  {moment(message.createdAt?.toDate().toString()).calendar()}
+                </p>
+              </span>
+            </span>
+            <p className=" ">{message.message}</p>
           </div>
         ))}
-        <SendMessage />
       </div>
-    </>
+      <SendMessage />
+    </div>
   );
 }
 
