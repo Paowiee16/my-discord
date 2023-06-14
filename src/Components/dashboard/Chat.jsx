@@ -29,14 +29,14 @@ function Chat() {
                 src={message.photoURL}
                 className="rounded-full h-12 w-12  shadow-lg"
               />
-              <span>
-                <p className=" text-yellow-500">{message.displayName}</p>
-                <p className="text-sm text-gray-500 content-center">
+              <span className="flex justify-center items-center gap-4">
+                <p className=" text-yellow-500">{message.displayName} </p>
+                <p className=" text-xs text-gray-500 content-center">
                   {moment(message.createdAt?.toDate().toString()).calendar()}
                 </p>
               </span>
             </span>
-            <p className=" ">{message.message}</p>
+            <p className=" ml-16">{message.message}</p>
           </div>
         ))}
       </div>
