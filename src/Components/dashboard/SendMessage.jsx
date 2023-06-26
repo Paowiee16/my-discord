@@ -31,10 +31,10 @@ function SendMessage() {
   };
 
   return (
-    <div className="flex flex-row mb-2">
+    <div className=" fixed bottom-0 border-2 p-3">
       <form onSubmit={handleOnSubmit}>
         <input
-          className=" bg-slate-600 rounded-s-2xl p-2 border-none outline-none appearance-none"
+          className=" bg-slate-600 rounded-s-2xl p-2 border-none outline-none appearance-none "
           onChange={handleOnchange}
           value={newMessage}
           placeholder="Type message here..."

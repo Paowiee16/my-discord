@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.chat{
+    min-width: 90vw;
+    margin: auto;
+    max-height: 900px;
+    overflow-y: scroll;
+ 
+    
+}
